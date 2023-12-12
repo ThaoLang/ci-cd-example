@@ -2,24 +2,27 @@ name: CD
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: executing remote ssh
-        uses: appleboy/ssh-action@v1.0.0
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
         with:
-          host: ${{ secrets.DO_HOST }}
-          username: ${{ secrets.DO_USERNAME }}
-          key: ${{ secrets.DO_PKEY }}
-          port: ${{ secrets.DO_PORT }}
-          script: |
-            cd code
-            git clone https://github.com/kt2k3104/next-jest-cicd.git
-            cd next-jest-cicd
-            npm install
-            echo "${{ secrets.ENV }}" >> .env
-            npm run build
-            npm start
+          node-version: 14
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Next.js App
+        run: npm run build
+
+      - name: Deploy to Production
+        run: |

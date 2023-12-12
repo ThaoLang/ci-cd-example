@@ -1,15 +1,15 @@
-name: 'coverage'
+name: "coverage"
 
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
-      - main
+      - master
 
 jobs:
   coverage:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: 'Generate coverage report'
+      - name: "Generate coverage report"
         uses: ArtiomTr/jest-coverage-report-action@v2

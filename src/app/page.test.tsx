@@ -11,5 +11,5 @@ it("Home: Works with Home Components (React State)", () => {
   fireEvent.click(screen.getByTestId("button-1"));
   expect(screen.getByRole("heading")).toHaveTextContent("Button 1");
   fireEvent.click(screen.getByTestId("button-2"));
-  expect(screen.getByRole("heading")).toHaveTextContent("button-2");
+  expect(screen.getByRole("heading")).toHaveTextContent("Button 2");
 });

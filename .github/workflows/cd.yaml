@@ -1,0 +1,25 @@
+name: CD
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.DO_PKEY }}
+          port: ${{ secrets.DO_PORT }}
+          script: |
+            cd code
+            git clone https://github.com/kt2k3104/next-jest-cicd.git
+            cd next-jest-cicd
+            npm install
+            echo "${{ secrets.ENV }}" >> .env
+            npm run build
+            npm start
